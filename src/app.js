@@ -1,15 +1,30 @@
 import express from "express"
-import cookieparser from "cookie-parser"
-import  cors from cors
+import cookieParser from "cookie-parser"
+import  cors from "cors"
 
 const app = express()
 app.use(cors({
-  origin:process.env.CORS_ORIGIN,
-  Credentials:true
+  origin:"*",
+  credentials:true
 }))
 app.use(express.json({limits:"16kb"}))
 app.use(express.urlencoded({extended:true,limit:"16kb"}))
 app.use(express.static("public"))
-app.use(cookieParser)
+app.use(cookieParser())
 
-export { app }
+//route import
+import userRoute from "./routes/user.routes.js"
+
+//routes declaration
+app.use("/api/v1/user",userRoute);
+
+//http://localhost:8000/api/v1/users/register
+
+// ... your other middlewares and routes up here
+
+// app.post("/test-register", (req, res) => {
+//     res.status(200).json({ message: "Direct app.js connection works!" });
+// });
+
+export { app };
+
