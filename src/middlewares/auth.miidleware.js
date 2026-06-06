@@ -16,6 +16,7 @@ export const verifyJWT=asyncHandler(async(req,res,next)=>{
    const user = await User.findById(decodedToken?._Id).select("-password -refreshToken")
     if (!user) {
       // Next_VIDEO :discuss about frontend
+      
       throw new ApiError(401, "invalid access token")
     }
     req.user = user;
